@@ -60,36 +60,29 @@
   <thead>
     <tr>
       <th scope="col">Rider</th>
-      <th scope="col">Nickname</th>
       <th scope="col">Bike</th>
       <th scope="col">Status</th>
+	  <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-       
-      <td>Amine</td>
-      <td>Aminous</td>
-      <td>123456</td>
-	  <td>On raod</td>
-    </tr>
-    <tr>
+  {{#riders}}
+  <form action="/rider" Method="POST">
+    <tr> 
+	  <input type="hidden" name="id" value="{{userId}}" />	
       
-      <td>kamal</td>
-      <td>kamilion</td>
-      <td>741258</td>
-	  <td>ready</td>
+      <td>{{nickName}}</td>
+	  <td>147852</td>
+	  <td>{{status}}</td>
+	  <td><input class="btn btn-primary" type="submit" value="Go"></td>
     </tr>
-    <tr>
-       
-      <td>test_test</td>
-      <td>test</td>
-	  <td>852456</td>
-      <td>On raod</td>
-    </tr>
+  </form>  
+{{/riders}}
+      
   </tbody>
 </table>
     
+		
 		</div>
 </div>
 </section>
