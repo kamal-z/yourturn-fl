@@ -47,14 +47,14 @@
     </div>
 </nav>
 
-<section class="jumbotron text-center">
+<section class="jumbotron text-center col-sm-12">
     <div class="container">
         <h1 class="jumbotron-heading">Your Turn application</h1>
      </div>
 </section>
 
 <section class="text-center">
-     <div class="container">
+     <div class="container col-sm-10 col-md-10 col-lg-10">
 		<div class="row">
 			<table class="table table-striped">
   <thead>
@@ -67,7 +67,7 @@
   </thead>
   <tbody>
   {{#riders}}
-  <form action="/rider" Method="POST">
+  <form action="/" Method="POST">
     <tr> 
 	  <input type="hidden" name="id" value="{{userId}}" />	
       

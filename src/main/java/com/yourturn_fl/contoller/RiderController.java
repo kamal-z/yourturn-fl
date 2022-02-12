@@ -17,7 +17,7 @@ import com.yourturn_fl.service.UserService;
 import com.yourturn_fl.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/rider")
+@RequestMapping("/")
 public class RiderController {
 	
  @Autowired
