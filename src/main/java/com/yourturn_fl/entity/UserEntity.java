@@ -11,18 +11,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.yourturn_fl.common.Status;
 
 @Entity(name="users")
+@NamedQuery(query = "select Max(u.ranking) from users u where u.status = :status", name = UserEntity.FIND_MAX_RINKING_BY_STATUS)
 public class UserEntity implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String FIND_MAX_RINKING_BY_STATUS = "find max ranking by status";
 
 	@Id
 	@GeneratedValue
@@ -55,7 +58,7 @@ public class UserEntity implements Serializable{
 	@Column
 	private int ranking;
 	
-	private String status;
+	private Status status;
 	
 	public long getId() {
 		return id;
@@ -120,10 +123,10 @@ public class UserEntity implements Serializable{
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
 	}
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	

@@ -1,97 +1,63 @@
-<!DOCTYPE html>
-<html>
+{{ > head}}
 
-<head>
+ {{> carousel}}
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  
-</head>
+
 <body>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">YourTurn</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
-            <ul class="navbar-nav m-auto">
-                <li class="nav-item m-auto">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Riders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Bikes</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-
-            <form class="form-inline my-2 my-lg-0">
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." data-cip-id="cIPJQ342845639">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary btn-number">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                
-            </form>
-        </div>
-    </div>
-</nav>
-
-<section class="jumbotron text-center col-sm-12">
-    <div class="container">
-        <h1 class="jumbotron-heading">Your Turn application</h1>
-     </div>
-</section>
-
-<section class="text-center">
-     <div class="container col-sm-10 col-md-10 col-lg-10">
-		<div class="row">
-			<table class="table table-striped col-sm-12">
-  <thead>
-    <tr>
-      <th scope="col">Rider</th>
-      <th scope="col">Bike</th>
-      <th scope="col">Status</th>
-	  <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-  {{#riders}}
-  <form action="/" Method="POST">
-    <tr> 
-	  <input type="hidden" name="id" value="{{userId}}" />	
-      
-      <td>{{nickName}}</td>
-	  <td>147852</td>
-	  <td>{{status}}</td>
-	  <td><input class="btn btn-primary" type="submit" value="Go"></td>
-    </tr>
-  </form>  
-{{/riders}}
-      
-  </tbody>
-</table>
-    
-		
-		</div>
-</div>
-</section>
  
-
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <div class="container py-5">
+    <div class="row">
+        <div class="col-md-6 col-sm-12"">
+            <div class="p-3 bg-white text-center">
+                <div><img src="https://i.imgur.com/yFeV2ed.png">
+                    <h1>Rider in hub</h1>
+                </div>
+				{{#ridersInHub}}
+				<form action="/" Method="POST">
+                <div class="d-flex flex-row justify-content-between align-items-center py-2">
+				<input type="hidden" name="id" value="{{userId}}" />	
+                    <div class="d-flex flex-row align-items-center"><img class="rounded-circle" src="{{imagePath}}" width="55">
+                        <div class="d-flex flex-column align-items-start ml-2">
+							<span class="font-weight-bold">{{nickName}}</span>
+							<span class="followers"> Bike 1450 </span>
+						</div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mt-2"><button class="btn btn-outline-primary btn-sm" type="submit">Go</button></div>
+                </div>
+                </form>
+				{{/ridersInHub}}
+ 
+            </div>
+        </div>
+        
+        
+                <div class="col-md-6 col-sm-12">
+            <div class="p-3 bg-white text-center">
+                <div><img src="https://i.imgur.com/yFeV2ed.png">
+                    <h1>Rider on road</h1>
+                </div>
+ 				
+ 				{{#ridersOnReaod}}
+ 				<form action="/return" Method="POST">
+                <div class="d-flex flex-row justify-content-between align-items-center py-2">
+				<input type="hidden" name="id" value="{{userId}}" />	
+                    <div class="d-flex flex-row align-items-center"><img class="rounded-circle" src="{{imagePath}}" width="55">
+                        <div class="d-flex flex-column align-items-start ml-2">
+							<span class="font-weight-bold">{{nickName}}</span>
+							<span class="followers"> Bike 1450 </span>
+						</div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mt-2"><button class="btn btn-outline-primary btn-sm" type="submit">Back to hub</button></div>
+                </div>
+                </form>
+				{{/ridersOnReaod}}
+ 
+            </div>
+        </div>
+        
+    </div>
+</div>
+   
+   {{ > footer}}
 </body>
 </html>

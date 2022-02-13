@@ -3,7 +3,14 @@ package com.yourturn_fl.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -43,7 +50,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private Utils utils;
 	
-	private static int lastRanking;
+	@Autowired
+	 EntityManager entitymanager;
+	
 
 	 
 
@@ -118,11 +127,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserEntity> getUsers() {
+	public Map<String,List<UserEntity>> getUsers() {
 		List<UserEntity> users = (List<UserEntity>) userRepository.findAll();
-		lastRanking = users.size();
-		Collections.sort(users, new UserComperator(users));
-		return users;
+		List<UserEntity> ridersOnReaod = users.stream().filter(user -> user.getStatus().equals(Status.on_road)).collect(Collectors.toList());
+		List<UserEntity> ridersInHub = users.stream().filter(user -> user.getStatus().equals(Status.in_hub)).collect(Collectors.toList());
+		Collections.sort(ridersInHub, new UserComperator(ridersInHub));
+		Map<String,List<UserEntity>> riders = new HashMap<String, List<UserEntity>>();
+		riders.put("ridersInHub", ridersInHub);
+		riders.put("ridersOnReaod", ridersOnReaod);
+		return riders;
 	}
 
 	public void authUserWithAuthManager(String email, String password) {
@@ -132,12 +145,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void goRider(String userId) {
+	public void changeStatusAndRanking(String userId, Status status) {
 		UserEntity userEntity = userRepository.findByUserId(userId);
-		userEntity.setRanking(userEntity.getRanking() + lastRanking);
-		userEntity.setStatus(Status.on_road.toString());
+		userEntity.setStatus(status);
+		userEntity.setRanking(findTheLastUserBySatus(status) + 1);
+		findTheLastUserBySatus(status);
 		userRepository.save(userEntity);
 		
+	}
+	
+	public int findTheLastUserBySatus(Status status) {
+		  Query query = entitymanager.createNamedQuery(UserEntity.FIND_MAX_RINKING_BY_STATUS);
+		  query.setParameter("status", status);
+		  int maxRanking =   query.getSingleResult() == null ? 0 : (int) query.getSingleResult();
+		  return maxRanking;
 	}
 
 }

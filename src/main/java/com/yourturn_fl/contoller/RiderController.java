@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yourturn_fl.common.Status;
 import com.yourturn_fl.entity.UserEntity;
 import com.yourturn_fl.service.UserService;
 import com.yourturn_fl.service.UserServiceImpl;
@@ -25,15 +26,19 @@ public class RiderController {
 	
 	@GetMapping
 	public ModelAndView getAllRiders() {
-		Map<String, List<UserEntity>> riders = new HashMap<String, List<UserEntity>>();
-		riders.put("riders", userservice.getUsers());
-		userservice.getUsers();
-		return new ModelAndView("index", riders);
+		return new ModelAndView("index", userservice.getUsers());
 	}
 	
 	@PostMapping
 	public ModelAndView go(@RequestParam String id) {
-		  userservice.goRider(id);
+		  userservice.changeStatusAndRanking(id, Status.on_road);
+		  return getAllRiders();
+	}
+	
+	@PostMapping
+	@RequestMapping("/return")
+	public ModelAndView retrunToHub(@RequestParam String id) {
+		  userservice.changeStatusAndRanking(id, Status.in_hub);
 		  return getAllRiders();
 	}
 
