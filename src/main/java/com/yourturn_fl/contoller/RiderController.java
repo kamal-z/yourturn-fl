@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.yourturn_fl.common.Status;
 import com.yourturn_fl.entity.UserEntity;
@@ -30,16 +31,20 @@ public class RiderController {
 	}
 	
 	@PostMapping
-	public ModelAndView go(@RequestParam String id) {
+	public RedirectView go(@RequestParam String id) {
 		  userservice.changeStatusAndRanking(id, Status.on_road);
-		  return getAllRiders();
+		  RedirectView redirectView = new RedirectView();
+		  redirectView.setUrl("/");
+		  return redirectView;
 	}
 	
 	@PostMapping
 	@RequestMapping("/return")
-	public ModelAndView retrunToHub(@RequestParam String id) {
+	public RedirectView retrunToHub(@RequestParam String id) {
 		  userservice.changeStatusAndRanking(id, Status.in_hub);
-		  return getAllRiders();
+		  RedirectView redirectView = new RedirectView();
+		  redirectView.setUrl("/");
+		  return redirectView;
 	}
 
 }
